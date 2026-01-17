@@ -9,8 +9,7 @@
   },
   "scripts": {
     "dev": "nodemon src/server.js",
-    "start": "node src/server.js",
-    "build": "prisma generate && prisma migrate deploy"
+    "start": "node src/server.js"
   },
   "dependencies": {
     "@prisma/client": "^5.22.0",
