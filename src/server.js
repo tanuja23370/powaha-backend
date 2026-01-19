@@ -10,31 +10,48 @@ dotenv.config();
 
 const app = express();
 
-// Middlewares
+/* =========================
+   MIDDLEWARES
+========================= */
 app.use(cors());
 app.use(express.json());
 
-// Routes
+/* =========================
+   API ROUTES
+========================= */
 app.use("/api/auth", authRoutes);
 app.use("/api/notifications", notificationRoutes);
 
-// Test route
+/* =========================
+   HEALTH CHECK
+========================= */
 app.get("/", (req, res) => {
   res.send("Backend is running 🚀");
 });
 
-// Test DB Connection
+/* =========================
+   TEST DB CONNECTION
+========================= */
 app.get("/test-db", async (req, res) => {
   try {
     const users = await prisma.user.findMany();
-    res.json({ success: true, users });
+    res.status(200).json({
+      success: true,
+      users,
+    });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ success: false, error: "DB connection failed" });
+    console.error("❌ DB Test Error:", error);
+    res.status(500).json({
+      success: false,
+      message: "DB connection failed",
+    });
   }
 });
 
-// Get All Notifications (Test Route)
+/* =========================
+   GET ALL NOTIFICATIONS
+   (TEST / ADMIN USE)
+========================= */
 app.get("/notifications", async (req, res) => {
   try {
     const notifications = await prisma.notification.findMany({
@@ -42,15 +59,25 @@ app.get("/notifications", async (req, res) => {
         createdAt: "desc",
       },
     });
-    res.json({ success: true, notifications });
+
+    res.status(200).json({
+      success: true,
+      notifications,
+    });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ success: false, error: "Failed to fetch notifications" });
+    console.error("❌ Fetch Notifications Error:", error);
+    res.status(500).json({
+      success: false,
+      message: "Failed to fetch notifications",
+    });
   }
 });
 
-const PORT = process.env.PORT || 5000;
+/* =========================
+   SERVER START
+========================= */
+const PORT = process.env.PORT || 10000;
 
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  console.log(`🚀 Server running on port ${PORT}`);
 });
