@@ -22,8 +22,9 @@ model Notification {
   message   String
   userId    Int
   isRead    Boolean  @default(false)
-  imageUrl  String?  @map("imageurl")
+  imageUrl  String?      // 👈 THIS is the column
   imageKey  String?
   createdAt DateTime @default(now())
   user      User     @relation(fields: [userId], references: [id])
 }
+
