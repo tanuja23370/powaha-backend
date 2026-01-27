@@ -4,7 +4,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url = env("DATABASE_URL")
+  url      = env("DATABASE_URL")
 }
 
 model User {
@@ -12,7 +12,8 @@ model User {
   email         String         @unique
   password      String
   createdAt     DateTime       @default(now())
-  name          String
+  name          String?
+  churchName    String?
   notifications Notification[]
 }
 
@@ -22,8 +23,7 @@ model Notification {
   message   String
   userId    Int
   isRead    Boolean  @default(false)
+  imageurl  String?
   createdAt DateTime @default(now())
   user      User     @relation(fields: [userId], references: [id])
 }
-
-

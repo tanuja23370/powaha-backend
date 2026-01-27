@@ -1,13 +1,17 @@
-import prisma from "../prisma.js";
+import { PrismaClient } from "@prisma/client";
+
+const prisma = new PrismaClient();
 
 /**
  * CREATE NOTIFICATION
+ * Admin / Church sends notification to a user
  * POST /api/notifications
  */
 export const createNotification = async (req, res) => {
   try {
     const { title, message, userId } = req.body;
 
+    // ✅ Strong validation
     if (!title || !message || !userId) {
       return res.status(400).json({
         success: false,
@@ -16,6 +20,7 @@ export const createNotification = async (req, res) => {
     }
 
     const parsedUserId = Number(userId);
+
     if (isNaN(parsedUserId)) {
       return res.status(400).json({
         success: false,
@@ -23,6 +28,7 @@ export const createNotification = async (req, res) => {
       });
     }
 
+    // ✅ Create notification
     const notification = await prisma.notification.create({
       data: {
         title,
@@ -37,6 +43,7 @@ export const createNotification = async (req, res) => {
     });
   } catch (error) {
     console.error("❌ Create Notification Error:", error);
+
     return res.status(500).json({
       success: false,
       message: "Failed to create notification",
@@ -45,30 +52,7 @@ export const createNotification = async (req, res) => {
 };
 
 /**
- * GET ALL NOTIFICATIONS
- * GET /api/notifications
- */
-export const getAllNotifications = async (req, res) => {
-  try {
-    const notifications = await prisma.notification.findMany({
-      orderBy: { createdAt: "desc" },
-    });
-
-    return res.status(200).json({
-      success: true,
-      notifications,
-    });
-  } catch (error) {
-    console.error("❌ Get All Notifications Error:", error);
-    return res.status(500).json({
-      success: false,
-      message: "Failed to fetch notifications",
-    });
-  }
-};
-
-/**
- * GET USER NOTIFICATIONS
+ * GET ALL NOTIFICATIONS FOR A USER
  * GET /api/notifications/:userId
  */
 export const getUserNotifications = async (req, res) => {
@@ -83,8 +67,12 @@ export const getUserNotifications = async (req, res) => {
     }
 
     const notifications = await prisma.notification.findMany({
-      where: { userId },
-      orderBy: { createdAt: "desc" },
+      where: {
+        userId,
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
     });
 
     return res.status(200).json({
@@ -92,7 +80,8 @@ export const getUserNotifications = async (req, res) => {
       notifications,
     });
   } catch (error) {
-    console.error("❌ Get User Notifications Error:", error);
+    console.error("❌ Get Notifications Error:", error);
+
     return res.status(500).json({
       success: false,
       message: "Failed to fetch notifications",
