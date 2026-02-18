@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Community Partner Registration</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --bg-top: #eef2ff;
+  --bg-bottom: #f8fafc;
+  --surface: #ffffff;
+  --surface-soft: #f8fafc;
+  --brand: #0b1f4a;
+  --brand-strong: #07132d;
+  --brand-accent: #c38b2d;
+  --text-main: #0f172a;
+  --text-muted: #5b6476;
+  --border: #dbe3ef;
+  --focus: rgba(11, 31, 74, 0.18);
+  --ok: #067647;
+  --radius-xl: 24px;
+  --radius-md: 12px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Plus Jakarta Sans", "Segoe UI", sans-serif;
+  color: var(--text-main);
+  background:
+    radial-gradient(900px 500px at 10% -10%, rgba(15, 23, 42, 0.07), transparent 70%),
+    radial-gradient(800px 400px at 100% 20%, rgba(11, 31, 74, 0.06), transparent 70%),
+    linear-gradient(180deg, var(--bg-top), var(--bg-bottom));
+  overflow: hidden;
+}
+
+.page-shell {
+  height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 16px;
+}
+
+.container {
+  width: 100%;
+  max-width: 1180px;
+  height: calc(100vh - 32px);
+  display: grid;
+  grid-template-columns: minmax(420px, 1fr) minmax(380px, 1fr);
+  gap: 20px;
+}
+
+.form-section,
+.image-section {
+  background: var(--surface);
+  border: 1px solid rgba(11, 31, 74, 0.08);
+  border-radius: var(--radius-xl);
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.09);
+}
+
+.form-section {
+  padding: 24px;
+  overflow: hidden;
+}
+
+.kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  color: var(--brand);
+  background: rgba(11, 31, 74, 0.07);
+  margin-bottom: 12px;
+}
+
+.kicker::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: var(--brand-accent);
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(26px, 2.9vw, 46px);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+.subtitle {
+  margin: 10px 0 16px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--text-muted);
+  max-width: 52ch;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.input-group.full {
+  grid-column: 1 / -1;
+}
+
+label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #334155;
+}
+
+input,
+textarea {
+  width: 100%;
+  border: 1px solid var(--border);
+  background: var(--surface-soft);
+  color: var(--text-main);
+  border-radius: var(--radius-md);
+  font-size: 14px;
+  font-family: inherit;
+  padding: 10px 12px;
+  transition: border-color 140ms ease, box-shadow 140ms ease, background 140ms ease;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #7b8798;
+}
+
+input:hover,
+textarea:hover {
+  border-color: #c3cede;
+}
+
+input:focus,
+textarea:focus {
+  outline: none;
+  border-color: #203b7b;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px var(--focus);
+}
+
+textarea {
+  min-height: 78px;
+  resize: vertical;
+}
+
+button {
+  width: 100%;
+  margin-top: 12px;
+  border: none;
+  border-radius: var(--radius-md);
+  padding: 12px 16px;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 700;
+  color: #ffffff;
+  cursor: pointer;
+  background: linear-gradient(120deg, var(--brand), #102c66);
+  box-shadow: 0 10px 20px rgba(11, 31, 74, 0.22);
+  transition: transform 120ms ease, box-shadow 120ms ease, background 140ms ease;
+}
+
+button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 14px 22px rgba(11, 31, 74, 0.25);
+  background: linear-gradient(120deg, var(--brand-strong), #0d2252);
+}
+
+button:active {
+  transform: translateY(0);
+}
+
+.success-msg {
+  margin-top: 10px;
+  padding: 8px 10px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ok);
+  background: rgba(6, 118, 71, 0.1);
+  border: 1px solid rgba(6, 118, 71, 0.2);
+  display: none;
+}
+
+.image-section {
+  display: grid;
+  align-items: stretch;
+  overflow: hidden;
+}
+
+.visual-panel {
+  position: relative;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  isolation: isolate;
+}
+
+.visual-panel::before {
+  content: "";
+  position: absolute;
+  width: 620px;
+  height: 620px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(11, 31, 74, 0.08) 0%, rgba(11, 31, 74, 0) 70%);
+  z-index: -2;
+}
+
+.visual-panel::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(160deg, rgba(239, 246, 255, 0.9), rgba(255, 255, 255, 0.7));
+  z-index: -1;
+}
+
+.image-wrapper {
+  width: min(84%, 460px);
+  aspect-ratio: 1 / 1.12;
+  border-radius: 42% 58% 56% 44% / 44% 43% 57% 56%;
+  overflow: hidden;
+  border: 1px solid rgba(15, 23, 42, 0.07);
+  box-shadow: 0 26px 45px rgba(15, 23, 42, 0.14);
+  background: #fff;
+  animation: floatIn 600ms ease-out;
+}
+
+.image-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@keyframes floatIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (max-width: 1040px) {
+  body {
+    overflow: auto;
+  }
+
+  .page-shell {
+    height: auto;
+  }
+
+  .container {
+    height: auto;
+    grid-template-columns: 1fr;
+    max-width: 760px;
+  }
+
+  .image-section {
+    order: -1;
+    min-height: 280px;
+  }
+
+  .image-wrapper {
+    width: min(70%, 380px);
+    aspect-ratio: 1 / 1;
+    border-radius: 24px;
+  }
+}
+
+@media (max-width: 640px) {
+  .page-shell {
+    padding: 14px;
+    height: auto;
+  }
+
+  .form-section {
+    padding: 24px 18px 20px;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  h1 {
+    font-size: 30px;
+  }
+
+  .subtitle {
+    font-size: 14px;
+    margin-bottom: 18px;
+  }
+
+  button {
+    margin-top: 14px;
+  }
+}
+</style>
+</head>
+
+<body>
+<div class="page-shell">
+  <div class="container">
+
+    <div class="form-section">
+      <div class="kicker">Community Partner Registration</div>
+      <h1>Enter Basic Information</h1>
+      <div class="subtitle">
+        Join our network of community partners. Fill in your details to proceed.
+      </div>
+
+      <form id="cpRegisterForm">
+        <div class="form-grid">
+          <div class="input-group full">
+            <label for="full_name">Full Name</label>
+            <input type="text" id="full_name" placeholder="Enter full name" required />
+          </div>
+
+          <div class="input-group">
+            <label for="mobile">Mobile Number</label>
+            <input type="tel" id="mobile" placeholder="Enter mobile number" required />
+          </div>
+
+          <div class="input-group">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" placeholder="Enter email address" required />
+          </div>
+
+          <div class="input-group">
+            <label for="city">City</label>
+            <input type="text" id="city" placeholder="City" />
+          </div>
+
+          <div class="input-group">
+            <label for="state">State / Province</label>
+            <input type="text" id="state" placeholder="State or province" />
+          </div>
+
+          <div class="input-group full">
+            <label for="country">Country</label>
+            <input type="text" id="country" placeholder="Country" />
+          </div>
+
+          <div class="input-group full">
+            <label for="experience">Years of Experience</label>
+            <input type="text" id="experience" placeholder="e.g. 5 years" />
+          </div>
+
+          <div class="input-group full">
+            <label for="preferred_aoo_area">Preferred Area of Operation</label>
+            <textarea id="preferred_aoo_area" placeholder="Describe your preferred service area"></textarea>
+          </div>
+        </div>
+
+        <button type="submit">Register</button>
+
+        <div class="success-msg" id="successMessage">
+          Registration successful. Await admin approval.
+        </div>
+      </form>
+    </div>
+
+    <div class="image-section">
+      <div class="visual-panel">
+        <div class="image-wrapper">
+          <img src="/images/icon.png" alt="POWAHA brand identity" />
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+document.getElementById("cpRegisterForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const payload = {
+    full_name: full_name.value.trim(),
+    mobile: mobile.value.trim(),
+    email: email.value.trim(),
+    city: city.value.trim(),
+    state: state.value.trim(),
+    country: country.value.trim(),
+    experience: experience.value.trim(),
+    preferred_aoo: {
+      area: preferred_aoo_area.value.trim(),
+    },
+  };
+
+  const res = await fetch("/api/cp/register", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+  });
+
+  if (res.ok) {
+    document.getElementById("successMessage").style.display = "block";
+    document.getElementById("cpRegisterForm").reset();
+  } else {
+    alert("Registration failed.");
+  }
+});
+</script>
+
+</body>
+</html>
